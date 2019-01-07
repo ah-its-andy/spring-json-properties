@@ -1,0 +1,19 @@
+group 'io.standardcore.libs'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {url 'https://repo.spring.io/milestone'}
+    maven {url 'https://maven.aliyun.com/repository/central'}
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot:1.5.9.RELEASE'
+    compile 'org.springframework:spring-core:1.5.9.RELEASE'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
