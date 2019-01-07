@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-com.feiniubus.extensions.configuration.CustomizeEnvironmentPostProcessor
+io.standardcore.environment.CustomizeEnvironmentPostProcessor

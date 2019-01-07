@@ -52,13 +52,7 @@ public class CustomizeEnvironmentPostProcessor implements EnvironmentPostProcess
         InputStream inputStream = environmentReader.read(environment, "appsettings.json");;
         JsonConfigurationMerger.merge("appsettings", inputStream, environment, application);
 
-        String env = environment.getProperty("env");
-        if(StringUtils.isEmpty(env)){
-            env = environment.getProperty("FeiniuBusEnvironment");
-        }
-        if(StringUtils.isEmpty(env)){
-            env = environment.getProperty("development");
-        }
+        String env = getStandardCoreEnvironmentValue(environment, application);
 
         String envFileName = "appsettings." + env + ".json";
         InputStream envStream = environmentReader.read(environment, envFileName);
@@ -66,6 +60,12 @@ public class CustomizeEnvironmentPostProcessor implements EnvironmentPostProcess
             System.out.println("Loading embeded  " + envFileName +" with " + environmentReader.getClass().getCanonicalName() + " .");
             JsonConfigurationMerger.merge("appsettings_" + env, envStream, environment, application);
         }
+    }
+
+    private String getStandardCoreEnvironmentValue(ConfigurableEnvironment environment, SpringApplication application){
+        String value = (String) environment.getSystemEnvironment().getOrDefault(DistributedNameConst.ENV_STANDARDCORE_ENVIRONMENT_NAME, "development");
+        if(StringUtils.isEmpty(value)) return "development";
+        return value.trim().toLowerCase();
     }
 
     private void loadSystemEnv(ConfigurableEnvironment environment, SpringApplication application){
